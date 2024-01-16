@@ -11,7 +11,7 @@ function App() {
         <div>Render Virtualized</div>
       </div>
       <div className="content">
-        <List items={dictionary} />
+        <List rowHeight={30} items={dictionary} />
       </div>
     </div>
   );

@@ -7,13 +7,14 @@ const Wrapper = styled.li`
   border-bottom: 1px solid black;
   padding-left: 8px;
   font-size: 18px;
-  display: flex;
-  align-items: center;
   font-family: monospace;
+  position: relative;
 `;
 
-export interface ItemProps {}
+export interface ItemProps {
+  postionTop: number 
+}
 
-export const Item: FC<ItemProps> = ({ children }) => {
-  return <Wrapper>{children}</Wrapper>;
+export const Item: FC<ItemProps> = ({ postionTop, children }) => {
+  return <Wrapper style={{"top": `${postionTop}px`}}>{children}</Wrapper>;
 };

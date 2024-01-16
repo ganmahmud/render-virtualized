@@ -1,8 +1,7 @@
 import {
   RefObject,
   useCallback,
-  useLayoutEffect,
-  useRef,
+  useEffect,
   useState
 } from "react";
 
@@ -18,7 +17,7 @@ export function useScrollPosition(
     throttleTimeout = null;
   }, [element]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const handleScroll = () => {
       if (wait) {
         if (throttleTimeout === null) {
