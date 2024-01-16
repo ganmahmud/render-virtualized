@@ -3,7 +3,7 @@ import React, { FC, useCallback, useMemo, useRef, useState } from "react";
 import { Item } from "./Item";
 import { SafelyRenderChildren } from "./SafelyRenderChildren";
 import { useScrollPosition } from "../hooks/useScrollPosition";
-import SearchBox from "./Searchbox";
+import SearchBox from "./SearchBox";
 
 const ScrollWrapper = styled.div`
   border: 1px solid black;
