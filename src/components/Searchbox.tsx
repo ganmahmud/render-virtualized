@@ -2,9 +2,9 @@ import React, { ChangeEvent, FC, memo, useCallback } from "react";
 import styled from "@emotion/styled";
 
 const Input = styled.input`
+    display: block;
     padding: 10px;
     font-size: 14px;
-    display: block;
 `;
 
 interface SearchBoxProps {

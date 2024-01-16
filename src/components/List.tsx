@@ -28,12 +28,6 @@ export const List: FC<ListProps> = ({ items, rowHeight, children }) => {
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
   const scrollPosition = useScrollPosition(scrollWrapperRef);
 
-  const [searchInput, setSearchInput] = useState<string>("");
-
-  const handleSearch = useCallback((value: string) => {
-    setSearchInput(value);
-  }, [items]);
-
   const maxAllowedVisibleRows = Math.ceil(scrollWrapperRef.current?.clientHeight / rowHeight);
 
   const startIndex = Math.floor(scrollPosition / rowHeight);
@@ -42,23 +36,23 @@ export const List: FC<ListProps> = ({ items, rowHeight, children }) => {
     startIndex + maxAllowedVisibleRows
   );
 
-  const totalListHeight = `${rowHeight * items.length}px`;
-
-
-
-  const visibleItems = useMemo(() => {
-    console.log("rendered");
-    const filteredItems = items.filter((item) =>
+  const [searchInput, setSearchInput] = useState<string>("");
+  const handleSearch = useCallback((value: string) => {
+    setSearchInput(value);
+  }, [items]);
+  
+  const filteredItems = useMemo(() => {
+    return items.filter((item) =>
       item.toLowerCase().startsWith(searchInput.toLowerCase())
     );
-    return filteredItems.slice(startIndex, endIndex + 1);
-  }, [
-    items,
-    startIndex,
-    endIndex,
-    searchInput
-  ]);
-
+  }, [items, searchInput]);
+  
+  const visibleItems = filteredItems.slice(startIndex, endIndex + 1);
+  
+  const totalListHeight = useMemo(() => {
+    return searchInput.length > 0 ? `${rowHeight * filteredItems.length}px` : `${rowHeight * items.length}px`;
+  }, [searchInput, filteredItems]);
+  
   return (
     <>
       <SearchBox onChange={handleSearch} />
@@ -71,7 +65,7 @@ export const List: FC<ListProps> = ({ items, rowHeight, children }) => {
            * limit (5,000) to the amount of children that can be rendered at one
            * time during virtualization.
            */}
-          <SafelyRenderChildren limit={5000}>
+          <SafelyRenderChildren limit={2500}>
             {visibleItems.map((word, index) => (
               <Item postionTop={startIndex * rowHeight} key={startIndex + index}>{word}</Item>
             ))}
